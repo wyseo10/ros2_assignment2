@@ -24,6 +24,11 @@ using std::placeholders::_1;
   double real_x = 0;
   double real_y = 0;
 
+  double err_x = 0;
+  double err_y = 0;
+  double err_theta = 0;
+
+
 class MinimalSubscriber : public rclcpp::Node
 {
 public:
@@ -32,20 +37,19 @@ public:
   {
     subscription_ = this->create_subscription<turtlesim::msg::Pose>(
       "/turtle1/pose", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
-  
-  
-  //변수선언하는곳//
-  
   }
 
 private:
   void topic_callback(const turtlesim::msg::Pose &msg) const
   {
-  real_x = msg.x - 5.544445;
-  real_y = msg.y - 5.544445;
-  
+    real_x = msg.x - 5.544445;
+    real_y = msg.y - 5.544445;
+
     RCLCPP_INFO(this->get_logger(), "x position: '%lf'", real_x);
     RCLCPP_INFO(this->get_logger(), "y position: '%lf'", real_y);
+
+    
+
   }
   rclcpp::Subscription<turtlesim::msg::Pose>::SharedPtr subscription_;
 };

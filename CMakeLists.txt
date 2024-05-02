@@ -5,6 +5,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -17,11 +20,11 @@ find_package(turtlesim REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 
-
-
 #<node name> src/<file.cpp>
-add_executable(talker src/pub.cpp)
-ament_target_dependencies(talker rclcpp std_msgs geometry_msgs)
+add_executable(pub 
+  src/pub.cpp
+  src/cmd_publisher.cpp)
+ament_target_dependencies(pub rclcpp std_msgs geometry_msgs turtlesim)
 
 add_executable(listener src/sub.cpp)
 ament_target_dependencies(listener rclcpp std_msgs turtlesim)
@@ -31,7 +34,7 @@ ament_target_dependencies(move_square rclcpp std_msgs geometry_msgs)
 
 
 install(TARGETS
-  talker
+  pub
   listener
   move_square
   DESTINATION lib/${PROJECT_NAME})
@@ -40,6 +43,8 @@ install(TARGETS
   launch
   DESTINATION share/${PROJECT_NAME}
 )
+
+# target_include_directories(cmd_publisher PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 target_include_directories(move_square PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

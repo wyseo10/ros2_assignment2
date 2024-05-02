@@ -1,22 +1,25 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+import launch_ros.actions
 
 def generate_launch_description():
-    return LaunchDescription([
-        Node(
+    number_of_sim = 5
+
+    ld = LaunchDescription()
+    for sim_id in range(0, number_of_sim):
+        simulator_node = Node(
+            namespace = 'turtlesim' + str(sim_id),
             package='turtlesim',
-            namespace='turtlesim1',
             executable='turtlesim_node',
-            name='sim'
-        ),
-        Node(
-            package='turtlesim',
-            namespace='turtlesim2',
-            executable='turtlesim_node',
-            name='sim'
-        ),
-        Node(
-            package='ros2_assig',
-            executable='square'
+            output='screen'
         )
-    ])
+        ld.add_action(simulator_node)
+
+        controller_node = Node(
+            namespace= 'turtlesim' + str(sim_id),
+            package= 'ros2_assig2',
+            executable= 'pub',
+            output='screen'
+        )
+        ld.add_action(controller_node)
+    return ld

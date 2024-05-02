@@ -28,16 +28,16 @@
 
 using namespace std::chrono_literals;
 
-class MinimalPublisher : public rclcpp::Node
+class CmdPublisher : public rclcpp::Node
 {
 public:
-  MinimalPublisher()
+  CmdPublisher()
   : Node("minimal_publisher")
   {
     publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("/turtlesim1/turtle1/cmd_vel", 10);
     publisher_2 = this->create_publisher<geometry_msgs::msg::Twist>("/turtlesim2/turtle1/cmd_vel", 10);
     timer_ = this->create_wall_timer(
-      100ms, std::bind(&MinimalPublisher::timer_callback, this));
+      100ms, std::bind(&CmdPublisher::timer_callback, this));
   }
   
 private:
@@ -80,7 +80,7 @@ private:
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<MinimalPublisher>());
+  rclcpp::spin(std::make_shared<CmdPublisher>());
   rclcpp::shutdown();
   return 0;
 }

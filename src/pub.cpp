@@ -22,62 +22,116 @@
 #include "std_msgs/msg/string.hpp"
 
 #include "geometry_msgs/msg/twist.hpp"
+#include <turtlesim/msg/pose.hpp>
 
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Dense>
+#include <cmath>
+#include "cmd_publisher.h"
+
+#pragma GCC push_options
+#pragma GCC optimize("O0")
 
 using namespace std::chrono_literals;
-
-class MinimalPublisher : public rclcpp::Node
-{
-public:
-  MinimalPublisher()
-  : Node("minimal_publisher")
-  {
-    publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("/turtlesim1/turtle1/cmd_vel", 10);
-    publisher_2 = this->create_publisher<geometry_msgs::msg::Twist>("/turtlesim2/turtle1/cmd_vel", 10);
-    timer_ = this->create_wall_timer(
-      100ms, std::bind(&MinimalPublisher::timer_callback, this));
-  }
-  
-private:
-	  void timer_callback()
-  {
-
-  if(flag == true)
-  {
-    cmd_vel.linear.x = 3;
-    cmd_vel.angular.z = 0;
-    flag = false;
-  }
-  else 
-  {
-    cmd_vel.linear.x = 0;
-    cmd_vel.angular.z = 3.141592653589723238462643383 / 2;
-    flag = true;
-  }
-    publisher_->publish(cmd_vel);
-    //RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
-  }
-
-  rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_2;
-
-
-  //-Init variables
-  geometry_msgs::msg::Twist cmd_vel;
-  geometry_msgs::msg::Twist cmd_vel_2;
-  double x_velocity = 3;
-  double y_velocity = 3;
-  double ang_velocity = 1;
-  bool flag = true;
-};
+using std::placeholders::_1;
 
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<MinimalPublisher>());
+  rclcpp::spin(std::make_shared<CmdPublisher>());
+
+
   rclcpp::shutdown();
   return 0;
 }
+
+#pragma GCC pop_options
+
+
+    //Try 1. real_time 제어 
+    //cnt++;
+    //real_time = cnt * dt;
+
+    //RCLCPP_INFO(this->get_logger(), "err_x, err_x: '[%lf] [%lf]'", err_x, err_x);
+    //RCLCPP_INFO(this->get_logger(), "dt: '%lf'", dt);
+    // RCLCPP_INFO(this->get_logger(), "real_time: '%lf'", real_time);
+
+    // Trajectory generator
+    // if(cnt == 400) cnt = 0;
+
+    // if(real_time < 1)
+    // {
+    //   cmd_x += dt * square_dist;
+    //   // RCLCPP_INFO(this->get_logger(), "right!");
+    //   x_flag = true;
+    //   y_flag = false;
+      
+    // }
+    // else if (real_time < 2)
+    // {
+    //   cmd_y += dt * square_dist;
+    //   // RCLCPP_INFO(this->get_logger(), "Up!");
+    //   x_flag = false;
+    //   y_flag = true;
+    // }
+    // else if (real_time < 3)
+    // {
+    //   cmd_x -= dt * square_dist;
+    //   // RCLCPP_INFO(this->get_logger(), "Left!");
+    //   x_flag = true;
+    //   y_flag = false;
+    // }
+    // else
+    // {
+    //   cmd_y -= dt * square_dist;
+    //   // RCLCPP_INFO(this->get_logger(), "Down!");
+    //   x_flag = false;
+    //   y_flag = true;    RCLCPP_INFO(this->get_logger(), "right!");
+
+    //   // Error 
+    //  if(x_flag)
+    //   {
+    //     err_x = cmd_x - real_x;
+    //     err_y = 0;
+    //   }
+    //   else
+    //   {
+    //     err_x = 0;
+    //     err_y = cmd_y - real_y;
+    //   }
+    //   // Ctrler
+    //   cmd_vel.linear.x = err_x;
+    //   cmd_vel.linear.y = 10;
+
+    // Try 2. 
+    // if(real_x < x_goal + threshold && real_x > x_goal - threshold &&
+    //      real_y < y_goal + threshold && real_y > y_goal - threshold)
+    // {
+    //   cmd_vel.linear.x = x_velocity;
+    //   cmd_vel.angular.z = 1000 * (atan2(y_goal, x_goal) - real_z);
+
+    //   RCLCPP_INFO(this->get_logger(), "right!");
+    // }
+
+    // else if(sig == 1)
+    // {
+    //   cmd_vel.linear.x = 0;
+    //   cmd_vel.linear.y = z_velocity;
+    //   RCLCPP_INFO(this->get_logger(), "Up!");
+    // }
+
+    // else if(sig == 2)
+    // {
+    //   cmd_vel.linear.x = -x_velocity;
+    //   cmd_vel.linear.y = 0;
+    //   RCLCPP_INFO(this->get_logger(), "Left!");
+    // }
+
+    // else if(sig == 3)
+    // {
+    //   cmd_vel.linear.x = 0;
+    //   cmd_vel.linear.y = -z_velocity;
+    //   RCLCPP_INFO(this->get_logger(), "Down!");
+      
+    //   sig = 0;
+    // }

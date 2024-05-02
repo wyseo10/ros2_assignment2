@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/amr/ros2_ws/install/turtlesim/include/**",
+        "/home/amr/ros2_ws/install/motion_capture_tracking_interfaces/include/**",
+        "/home/amr/ros2_ws/install/crazyflie_interfaces/include/**",
+        "/opt/ros/iron/include/**",
+        "/home/amr/ros2_ws/src/cpp_pubsub/include/**",
+        "/home/amr/ros2_ws/src/my_package/include/**",
+        "/home/amr/ros2_ws/src/ros2_assig/include/**",
+        "/home/amr/ros2_ws/src/ros2_assig2/include/**",
+        "/home/amr/ros2_ws/src/ros_tutorials/turtlesim/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

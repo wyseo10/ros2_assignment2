@@ -1,0 +1,26 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/amr/ros2_ws/install/turtlesim/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/motion_capture_tracking_interfaces/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/crazyflie_sim/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/crazyflie_examples/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/build/crazyflie_py",
+        "/home/amr/ros2_ws/install/crazyflie_py/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/crazyflie_interfaces/lib/python3.10/site-packages",
+        "/home/amr/crazyflie/crazyflie-firmware/build",
+        "/home/amr/crazyflie/crazyflie-firmware/build",
+        "/opt/ros/iron/lib/python3.10/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/amr/ros2_ws/install/turtlesim/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/motion_capture_tracking_interfaces/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/crazyflie_sim/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/crazyflie_examples/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/build/crazyflie_py",
+        "/home/amr/ros2_ws/install/crazyflie_py/lib/python3.10/site-packages",
+        "/home/amr/ros2_ws/install/crazyflie_interfaces/lib/python3.10/site-packages",
+        "/home/amr/crazyflie/crazyflie-firmware/build",
+        "/home/amr/crazyflie/crazyflie-firmware/build",
+        "/opt/ros/iron/lib/python3.10/site-packages"
+    ]
+}
