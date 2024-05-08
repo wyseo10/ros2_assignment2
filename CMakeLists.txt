@@ -15,40 +15,57 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(turtlesim REQUIRED)
 
+install(DIRECTORY
+  include//${PROJECT_NAME}
+  DESTINATION include/${PROJECT_NAME}
+)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 
 #<node name> src/<file.cpp>
-add_executable(pub 
-  src/pub.cpp
-  src/cmd_publisher.cpp)
+add_executable(pub src/pub.cpp)
 ament_target_dependencies(pub rclcpp std_msgs geometry_msgs turtlesim)
+#target_link_libraries(pub )
 
 add_executable(listener src/sub.cpp)
 ament_target_dependencies(listener rclcpp std_msgs turtlesim)
+#target_link_libraries(listener )
+
 
 add_executable(move_square src/square.cpp)
 ament_target_dependencies(move_square rclcpp std_msgs geometry_msgs)
+#target_link_libraries(move_square )
+
+add_executable(cmd_publisher src/cmd_publisher.cpp)
+ament_target_dependencies(cmd_publisher rclcpp std_msgs geometry_msgs turtlesim)
+#target_link_libraries(cmd_publisher )
+
+
 
 
 install(TARGETS
   pub
   listener
   move_square
+  cmd_publisher
   DESTINATION lib/${PROJECT_NAME})
   
-  install(DIRECTORY 
+install(DIRECTORY 
   launch
   DESTINATION share/${PROJECT_NAME}
 )
 
+
+
 # target_include_directories(cmd_publisher PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 target_include_directories(move_square PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>"
+  ${rclcpp_INCLUDE_DIRS}
+  )
 target_compile_features(move_square PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
 if(BUILD_TESTING)
